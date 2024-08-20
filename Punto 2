@@ -1,0 +1,71 @@
+%{
+#include <stdio.h>
+#include <string.h>
+
+// Definir el tamaño del diccionario
+#define DICT_SIZE 20
+
+// Definir la estructura del diccionario
+typedef struct {
+    const char *english;
+    const char *spanish;
+} DictionaryEntry;
+
+// Definir el diccionario
+DictionaryEntry dictionary[DICT_SIZE] = {
+    {"hello", "hola"},
+    {"world", "mundo"},
+    {"goodbye", "adiós"},
+    {"please", "por favor"},
+    {"thank", "gracias"},
+    {"yes", "sí"},
+    {"no", "no"},
+    {"cat", "gato"},
+    {"dog", "perro"},
+    {"book", "libro"},
+    {"the", "el"},
+    {"ocean", "océano"},
+    {"is", "es"},
+    {"dangerous", "peligroso"},
+    {"eat", "come"},
+    {"sleep", "dormir"},
+    {"fire", "fuego"},
+    {"beautiful", "hermoso"},
+    {"alone", "solo"},
+    {"fish", "pescado"}
+};
+
+// Función para traducir palabras usando el diccionario
+char* translate(const char* word) {
+    for (int i = 0; i < DICT_SIZE; ++i) {
+        if (strcmp(dictionary[i].english, word) == 0) {
+            return (char*)dictionary[i].spanish;
+        }
+    }
+    return NULL; // Retorna NULL si no se encuentra la traducción
+}
+
+// Función para imprimir la traducción o indicar que no se encuentra
+void print_translation(const char* word) {
+    char* translated = translate(word);
+    if (translated) {
+        printf("%s ", translated);
+    } else {
+        printf("[No traducido: %s] ", word);
+    }
+}
+%}
+
+%%
+
+[a-zA-Z]+    { print_translation(yytext); }
+[ \t\n]+     { /* Ignorar espacios y tabulaciones */ }
+[.,;!?]      { printf("%s", yytext); } // Imprimir signos de puntuación tal cual
+.            { /* Ignorar cualquier otro carácter */ }
+
+%%
+
+int main(int argc, char **argv) {
+    yylex();
+    return 0;
+}
