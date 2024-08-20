@@ -29,3 +29,4 @@ nano punto5.l -> abre archivo de texto tipo nano,
 flex punto5.l -> crea un archivo tipo C,
 gcc -o punto5 lx.yy.c -lfl -lm -> correra el archivo C generado por el archivo flex,
 ./punto5 -> permite ejecutar y abrira la consola para su uso
+
