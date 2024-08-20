@@ -1,0 +1,84 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void calcular_entero(int n);
+void calcular_imaginario(int coef);
+void calcular_complejo_rectangular(int real, int imag);
+void calcular_complejo_polar(double r, double theta);
+%}
+
+%%
+
+[+-]?[0-9]+ {
+    // Número entero
+    int n = atoi(yytext);
+    calcular_entero(n);
+}
+
+[+-]?[0-9]+i {
+    // Número imaginario
+    int coef = atoi(yytext);
+    calcular_imaginario(coef);
+}
+
+[+-]?[0-9]+[ ]*[+-][ ]*[0-9]+i {
+    // Número complejo en forma rectangular: 4 + 6i
+    int real, imag;
+    if (sscanf(yytext, "%d %*c %di", &real, &imag) == 2) {
+        calcular_complejo_rectangular(real, imag);
+    } else {
+        fprintf(stderr, "Formato rectangular no reconocido: %s\n", yytext);
+    }
+}
+
+[+-]?[0-9]+([.,][0-9]+)?[ ]*<[ ]*[+-]?[0-9]+([.,][0-9]+)?º {
+    // Número complejo en forma polar: 7 < 78.6º o 6 < 49,5º
+    double r, theta;
+    char formato[20];
+    // Reemplazar la coma por un punto si es necesario
+    if (sscanf(yytext, "%lf < %lfº", &r, &theta) == 2) {
+        // Convertir grados a radianes
+        theta = theta * M_PI / 180.0;
+        calcular_complejo_polar(r, theta);
+    } else {
+        // Reemplazar coma por punto para el manejo decimal
+        sscanf(yytext, "%lf < %19[^º]", &r, formato);
+        sscanf(formato, "%lf", &theta);
+        theta = theta * M_PI / 180.0;
+        calcular_complejo_polar(r, theta);
+    }
+}
+
+.|\n {
+    // Ignorar otros caracteres
+}
+
+%%
+
+void calcular_entero(int n) {
+    printf("Número entero: %d\n", n);
+}
+
+void calcular_imaginario(int coef) {
+    printf("Número imaginario: %di\n", coef);
+}
+
+void calcular_complejo_rectangular(int real, int imag) {
+    printf("Número complejo: %d + %di\n", real, imag);
+}
+
+void calcular_complejo_polar(double r, double theta) {
+    printf("Número complejo polar: %.2f < %.2fº\n", r, theta * 180.0 / M_PI);
+    // Convertir a la forma rectangular para mayor claridad
+    double real = r * cos(theta);
+    double imag = r * sin(theta);
+    printf("Equivalente en forma rectangular: %.2f + %.2fi\n", real, imag);
+}
+
+int main(void) {
+    yylex();
+    return 0;
+}
+
