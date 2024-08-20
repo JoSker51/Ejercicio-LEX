@@ -11,9 +11,9 @@ Para correr este primer ejercicio se necesita un archivo de texto txt, en la con
 
 Para correr este ejercicio se nesita realizar un archivo de texto de tipo .l el cual es reconocido por flex y en este estaran las normas y funciones que flex seguira para ejecutar. Para eeste caso de un traductor de ingles a español, en el archivo de texto se tendra un diccionario con ciertas palabras, luego al ejecutar este traducira las plaabras del diccionario o frases que se puedan realizar ocn la combinacion de estas palabras
 
-nano traductor.l -> abrira un archivo de texto tipo nano donde se escribiran las reglsa y funciones
-flex traductor.l -> creara un arhcivo de tipo C
-gcc -o traductor lex.yy.c -lfl -> esto ejecutara el archivo de tipo C 
+nano traductor.l -> abrira un archivo de texto tipo nano donde se escribiran las reglsa y funciones,
+flex traductor.l -> creara un arhcivo de tipo C,
+gcc -o traductor lex.yy.c -lfl -> esto ejecutara el archivo de tipo C, 
 ./traductor -> permitira probar el programa y utilizarlo
 
 #Punto 3
@@ -25,7 +25,7 @@ para este programa se necesita un archivo txt con la siguente estructura "123 + 
 #Punto 5
 
 Para ejecutar el problema 5 en cual consiste en un programa que identifique numeros enteros, imaginarios y complejos en sus dos formas (rectangular y polar) , se debe crear el archivo tipo nano .l donde este tendra todas las reglas y funciones que ejecutara el archivo C, luego al ejecutarlo, cuando el ususario ingrese un numero identifica cual de las tres formas es.
-nano punto5.l -> abre archivo de texto tipo nano
-flex punto5.l -> crea un archivo tipo C
-gcc -o punto5 lx.yy.c -lfl -lm -> correra el archivo C generado por el archivo flex
+nano punto5.l -> abre archivo de texto tipo nano,
+flex punto5.l -> crea un archivo tipo C,
+gcc -o punto5 lx.yy.c -lfl -lm -> correra el archivo C generado por el archivo flex,
 ./punto5 -> permite ejecutar y abrira la consola para su uso
